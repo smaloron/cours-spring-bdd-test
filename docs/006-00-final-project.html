@@ -1,0 +1,134 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en-US" data-preset="contrast" data-primary-color="#307FFF"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="robots" content="noindex"><meta name="built-on" content="2025-07-27T21:45:01.487968"><title>Chapitre 6 : Projet de Synth&egrave;se et Bonnes Pratiques | Behaviour driven dev</title><script type="application/json" id="virtual-toc-data">[{"id":"objectifs-p-dagogiques","level":0,"title":"Objectifs pédagogiques","anchor":"#objectifs-p-dagogiques"},{"id":"introduction-devenir-le-ma-tre-d-uvre","level":0,"title":"Introduction : Devenir le maître d\u0027œuvre","anchor":"#introduction-devenir-le-ma-tre-d-uvre"},{"id":"le-projet-finaliser-le-crud-de-notre-api-de-livres","level":0,"title":"Le Projet : Finaliser le CRUD de notre API de Livres","anchor":"#le-projet-finaliser-le-crud-de-notre-api-de-livres"},{"id":"phase-1-la-sp-cification-crire-le-gherkin-pour-la-suppression","level":0,"title":"Phase 1 : La Spécification (Écrire le Gherkin pour la suppression)","anchor":"#phase-1-la-sp-cification-crire-le-gherkin-pour-la-suppression"},{"id":"phase-2-le-cycle-rouge-vert-refactor-pour-la-suppression","level":0,"title":"Phase 2 : Le Cycle Rouge-Vert-Refactor pour la Suppression","anchor":"#phase-2-le-cycle-rouge-vert-refactor-pour-la-suppression"},{"id":"exercice-7-impl-menter-la-liste-des-livres","level":0,"title":"Exercice 7 : Implémenter la liste des livres","anchor":"#exercice-7-impl-menter-la-liste-des-livres"},{"id":"correction-exercice-7","level":0,"title":"Correction exercice 7","anchor":"#correction-exercice-7"},{"id":"conclusion-de-cette-partie","level":0,"title":"Conclusion de cette partie","anchor":"#conclusion-de-cette-partie"}]</script><script type="application/json" id="topic-shortcuts"></script><link href="https://resources.jetbrains.com/writerside/apidoc/6.22.0-b776/app.css" rel="stylesheet"><meta name="msapplication-TileColor" content="#000000"><link rel="apple-touch-icon" sizes="180x180" href="https://jetbrains.com/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="https://jetbrains.com/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="https://jetbrains.com/favicon-16x16.png"><meta name="msapplication-TileImage" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-144x144.png"><meta name="msapplication-square70x70logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-70x70.png"><meta name="msapplication-square150x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-150x150.png"><meta name="msapplication-wide310x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x150.png"><meta name="msapplication-square310x310logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x310.png"><meta name="image" content=""><!-- Open Graph --><meta property="og:title" content="Chapitre 6 : Projet de Synth&egrave;se et Bonnes Pratiques | Behaviour driven dev"><meta property="og:description" content=""><meta property="og:image" content=""><meta property="og:site_name" content="Behaviour driven dev Help"><meta property="og:type" content="website"><meta property="og:locale" content="en_US"><meta property="og:url" content="writerside-documentation/006-00-final-project.html"><!-- End Open Graph --><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content=""><meta name="twitter:title" content="Chapitre 6 : Projet de Synth&egrave;se et Bonnes Pratiques | Behaviour driven dev"><meta name="twitter:description" content=""><meta name="twitter:creator" content=""><meta name="twitter:image:src" content=""><!-- End Twitter Card --><!-- Schema.org WebPage --><script type="application/ld+json">{
+    "@context": "http://schema.org",
+    "@type": "WebPage",
+    "@id": "writerside-documentation/006-00-final-project.html#webpage",
+    "url": "writerside-documentation/006-00-final-project.html",
+    "name": "Chapitre 6 : Projet de Synth&egrave;se et Bonnes Pratiques | Behaviour driven dev",
+    "description": "",
+    "image": "",
+    "inLanguage":"en-US"
+}</script><!-- End Schema.org --><!-- Schema.org WebSite --><script type="application/ld+json">{
+    "@type": "WebSite",
+    "@id": "writerside-documentation/#website",
+    "url": "writerside-documentation/",
+    "name": "Behaviour driven dev Help"
+}</script><!-- End Schema.org --></head><body data-id="006-00-final-project" data-main-title="Chapitre 6 : Projet de Synthèse et Bonnes Pratiques" data-article-props="{&quot;seeAlsoStyle&quot;:&quot;links&quot;}" data-template="article" data-breadcrumbs=""><div class="wrapper"><main class="panel _main"><header class="panel__header"><div class="container"><h3>Behaviour driven dev  Help</h3><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="006-00-final-project" id="006-00-final-project.md">Chapitre 6 : Projet de Synthèse et Bonnes Pratiques</h1><p id="-9y7clz_3">Bienvenue dans ce dernier chapitre ! Jusqu'&agrave; pr&eacute;sent, nous avons appris les diff&eacute;rents mouvements, les techniques, les outils. Nous avons pratiqu&eacute; chaque &quot;kata&quot; (forme) du BDD isol&eacute;ment. Il est maintenant temps de les assembler dans un &quot; kumite&quot; (combat) r&eacute;el : la r&eacute;alisation d'une fonctionnalit&eacute; compl&egrave;te.</p><p id="-9y7clz_4">Ce projet de synth&egrave;se est votre &eacute;preuve du feu. Vous partirez d'un besoin m&eacute;tier (une User Story) pour arriver &agrave; une fonctionnalit&eacute; compl&egrave;te, test&eacute;e et valid&eacute;e, en appliquant rigoureusement le cycle et les principes du BDD.</p><section class="chapter"><h2 id="objectifs-p-dagogiques" data-toc="objectifs-p-dagogiques">Objectifs p&eacute;dagogiques</h2><p id="-9y7clz_13">&Agrave; la fin de ce chapitre, vous serez capable de :</p><ul class="list _bullet" id="-9y7clz_14"><li class="list__item" id="-9y7clz_15"><p id="-9y7clz_20"><span class="control" id="-9y7clz_21">Traduire</span> une User Story en une s&eacute;rie de sc&eacute;narios Gherkin.</p></li><li class="list__item" id="-9y7clz_16"><p id="-9y7clz_22"><span class="control" id="-9y7clz_23">Appliquer</span> le cycle BDD complet (Spec -&gt; Rouge -&gt; Vert -&gt; Refactor) pour impl&eacute;menter une fonctionnalit&eacute; CRUD.</p></li><li class="list__item" id="-9y7clz_17"><p id="-9y7clz_24"><span class="control" id="-9y7clz_25">Combiner</span> les techniques apprises : <code class="code" id="-9y7clz_26">Scenario Outline</code>, <code class="code" id="-9y7clz_27">Test Context</code>, <code class="code" id="-9y7clz_28">MockMvc</code>.</p></li><li class="list__item" id="-9y7clz_18"><p id="-9y7clz_29"><span class="control" id="-9y7clz_30">Mettre en &oelig;uvre</span> une fonctionnalit&eacute; compl&egrave;te de mani&egrave;re guid&eacute;e par les tests de comportement.</p></li><li class="list__item" id="-9y7clz_19"><p id="-9y7clz_31"><span class="control" id="-9y7clz_32">Ressentir</span> la confiance que procure le fait d'avoir une suite de tests qui valide chaque aspect du besoin m&eacute;tier.</p></li></ul></section><section class="chapter"><h2 id="introduction-devenir-le-ma-tre-d-uvre" data-toc="introduction-devenir-le-ma-tre-d-uvre">Introduction : Devenir le ma&icirc;tre d'&oelig;uvre</h2><p id="-9y7clz_33">Imaginez que vous &ecirc;tes un architecte. Vous avez appris &agrave; dessiner des fen&ecirc;tres, des portes, des murs. Maintenant, un client vous demande de construire une maison enti&egrave;re. C'est &agrave; la fois intimidant et exaltant.</p><p id="-9y7clz_34">C'est exactement notre position. Le &quot;client&quot; (notre Product Owner imaginaire) nous a donn&eacute; des besoins pour notre API de biblioth&egrave;que. Notre mission est de transformer ces besoins en un logiciel fonctionnel et robuste. Le BDD sera notre plan directeur, notre boussole, nous assurant &agrave; chaque &eacute;tape que ce que nous construisons est bien ce qui a &eacute;t&eacute; demand&eacute;.</p></section><section class="chapter"><h2 id="le-projet-finaliser-le-crud-de-notre-api-de-livres" data-toc="le-projet-finaliser-le-crud-de-notre-api-de-livres">Le Projet : Finaliser le CRUD de notre API de Livres</h2><p id="-9y7clz_35">Notre mission est de compl&eacute;ter les fonctionnalit&eacute;s de gestion des livres.</p><p id="-9y7clz_36"><span class="control" id="-9y7clz_39">User Stories (Besoins m&eacute;tier) :</span></p><ol class="list _decimal" id="-9y7clz_37" type="1"><li class="list__item" id="-9y7clz_40"><p id="-9y7clz_44"><span class="control" id="-9y7clz_45">US1 (Cr&eacute;ation) :</span> En tant que biblioth&eacute;caire, je veux pouvoir ajouter un nouveau livre au catalogue pour enrichir notre collection. <span class="emphasis" id="-9y7clz_46">(Nous avons d&eacute;j&agrave; bien avanc&eacute; sur celle-ci)</span>.</p></li><li class="list__item" id="-9y7clz_41"><p id="-9y7clz_47"><span class="control" id="-9y7clz_48">US2 (Lecture) :</span> En tant qu'utilisateur, je veux pouvoir lister tous les livres disponibles pour parcourir le catalogue.</p></li><li class="list__item" id="-9y7clz_42"><p id="-9y7clz_49"><span class="control" id="-9y7clz_50">US3 (Mise &agrave; jour) :</span> En tant que biblioth&eacute;caire, je veux pouvoir modifier les informations d'un livre pour corriger des erreurs.</p></li><li class="list__item" id="-9y7clz_43"><p id="-9y7clz_51"><span class="control" id="-9y7clz_52">US4 (Suppression) :</span> En tant que biblioth&eacute;caire, je veux pouvoir supprimer un livre du catalogue s'il est perdu ou retir&eacute;.</p></li></ol><p id="-9y7clz_38">Nous allons impl&eacute;menter ensemble la User Story 4 (Suppression) pas &agrave; pas. Votre exercice sera d'impl&eacute;menter la User Story 2 (Lecture de tous les livres).</p></section><section class="chapter"><h2 id="phase-1-la-sp-cification-crire-le-gherkin-pour-la-suppression" data-toc="phase-1-la-sp-cification-crire-le-gherkin-pour-la-suppression">Phase 1 : La Sp&eacute;cification (&Eacute;crire le Gherkin pour la suppression)</h2><p id="-9y7clz_53">Le premier r&eacute;flexe : se r&eacute;unir avec les &quot;Trois Amigos&quot; et d&eacute;finir les comportements attendus avec des exemples.</p><p id="-9y7clz_54"><span class="control" id="-9y7clz_56"><code class="code" id="-9y7clz_57">src/test/resources/features/book_management.feature</code></span> (Nous pouvons cr&eacute;er un nouveau fichier pour regrouper tout le CRUD)</p><div class="code-block" data-lang="gherkin">
+Feature: Gestion du cycle de vie d'un livre
+
+  En tant que bibliothécaire,
+  je veux pouvoir créer, lire, mettre à jour et supprimer des livres
+  pour maintenir le catalogue à jour.
+
+  Background:
+    Given la base de données contient les livres suivants:
+      | isbn           | title      | author         | publicationYear |
+      | &quot;978-0441013593&quot; | &quot;Dune&quot;     | &quot;Frank Herbert&quot;| 1965            |
+      | &quot;978-0553803719&quot; | &quot;Foundation&quot; | &quot;Isaac Asimov&quot; | 1951            |
+
+  Scenario: Suppression réussie d'un livre existant
+    When je demande à supprimer le livre avec l'ISBN &quot;978-0441013593&quot;
+    Then l'opération doit réussir avec un statut &quot;No Content&quot;
+    And le livre avec l'ISBN &quot;978-0441013593&quot; ne doit plus exister
+
+  Scenario: Tentative de suppression d'un livre inexistant
+    When je demande à supprimer le livre avec l'ISBN &quot;999-9999999999&quot;
+    Then l'opération doit échouer avec un statut &quot;Not Found&quot;
+</div></section><section class="chapter"><h2 id="phase-2-le-cycle-rouge-vert-refactor-pour-la-suppression" data-toc="phase-2-le-cycle-rouge-vert-refactor-pour-la-suppression">Phase 2 : Le Cycle Rouge-Vert-Refactor pour la Suppression</h2><section class="procedure-steps"><h3 id="-9y7clz_58" data-toc="-9y7clz_58">Implémentation guidée de la suppression</h3><ol class="list _decimal" id="-9y7clz_60" type="1"><li class="list__item" id="-9y7clz_61"><p id="-9y7clz_65"><span class="control" id="-9y7clz_66">Lancez les tests.</span> Vous obtiendrez des &quot;undefined steps&quot;. Cr&eacute;ez une nouvelle classe <code class="code" id="-9y7clz_67">BookManagementStepDefinitions.java</code> et copiez-y les snippets. N'oubliez pas de la lier &agrave; Spring (<code class="code" id="-9y7clz_68">@SpringBootTest</code>, <code class="code" id="-9y7clz_69">@AutoConfigureMockMvc</code>, etc.).</p></li><li class="list__item" id="-9y7clz_62"><p id="-9y7clz_70"><span class="control" id="-9y7clz_73">&Eacute;tape ROUGE : Impl&eacute;mentez les steps de test.</span></p><div class="code-block" data-lang="java">
+package fr.formation.spring.librarymanagement.bdd;
+// ... imports ...
+
+@SpringBootTest
+@AutoConfigureMockMvc
+// ...
+public class BookManagementStepDefinitions {
+
+    @Autowired
+    private MockMvc mockMvc;
+    @Autowired
+    private BookRepository bookRepository;
+    // ... injectez le TestContext si vous en avez besoin ...
+
+    private ResultActions resultActions;
+
+    // Given et Background déjà gérés par notre DataInitializer
+    // ou peuvent être implémentés ici pour plus de contrôle.
+
+    @When(&quot;je demande à supprimer le livre avec l'ISBN {string}&quot;)
+    public void je_demande_a_supprimer_le_livre_avec_l_isbn(String isbn) 
+            throws Exception {
+        resultActions = mockMvc.perform(delete(&quot;/api/books/&quot; + isbn));
+    }
+
+    @Then(&quot;l'opération doit réussir avec un statut {string}&quot;)
+    public void l_operation_doit_reussir_avec_un_statut(String status) 
+            throws Exception {
+        if (&quot;No Content&quot;.equalsIgnoreCase(status)) {
+            resultActions.andExpect(status().isNoContent()); // 204
+        }
+    }
+
+    @Then(&quot;le livre avec l'ISBN {string} ne doit plus exister&quot;)
+    public void le_livre_avec_l_isbn_ne_doit_plus_exister(String isbn) {
+        assertThat(bookRepository.existsById(isbn)).isFalse();
+    }
+
+    @Then(&quot;l'opération doit échouer avec un statut {string}&quot;)
+    public void l_operation_doit_echouer_avec_un_statut(String status) 
+            throws Exception {
+        if (&quot;Not Found&quot;.equalsIgnoreCase(status)) {
+            resultActions.andExpect(status().isNotFound()); // 404
+        }
+    }
+}
+</div><p id="-9y7clz_72"><span class="control" id="-9y7clz_74">Lancez les tests :</span> Ils &eacute;choueront avec une erreur 404 (Not Found), car l'endpoint <code class="code" id="-9y7clz_75">DELETE /api/books/{isbn}</code> n'existe pas. C'est parfait, nous sommes dans le ROUGE.</p></li><li class="list__item" id="-9y7clz_63"><p id="-9y7clz_76"><span class="control" id="-9y7clz_79">&Eacute;tape VERTE : &Eacute;crivez le code de production.</span> Ajoutez la m&eacute;thode de suppression dans <code class="code" id="-9y7clz_80">BookController.java</code>.</p><div class="code-block" data-lang="java">
+// Dans BookController.java
+
+@DeleteMapping(&quot;/{isbn}&quot;)
+public ResponseEntity&lt;Void&gt; deleteBook(@PathVariable String isbn) {
+    if (!bookRepository.existsById(isbn)) {
+        // Le livre n'existe pas, on ne peut pas le supprimer.
+        return ResponseEntity.notFound().build();
+    }
+    bookRepository.deleteById(isbn);
+    // Suppression réussie, on retourne 204 No Content.
+    return ResponseEntity.noContent().build();
+}
+</div><p id="-9y7clz_78"><span class="control" id="-9y7clz_81">Lancez les tests :</span> Tout passe au VERT ! Notre fonctionnalit&eacute; est impl&eacute;ment&eacute;e et valid&eacute;e par le comportement attendu.</p></li><li class="list__item" id="-9y7clz_64"><p id="-9y7clz_82"><span class="control" id="-9y7clz_83">&Eacute;tape REFACTOR :</span> Le code est simple et clair. Le test aussi. Pour l'instant, pas de refactoring majeur n&eacute;cessaire. On a bien d&eacute;compos&eacute; les <code class="code" id="-9y7clz_84">Then</code> en deux &eacute;tapes distinctes (v&eacute;rifier le statut, v&eacute;rifier l'&eacute;tat en base), ce qui est une bonne pratique.</p></li></ol><ol class="list _decimal"></ol></section></section><section class="chapter"><h2 id="exercice-7-impl-menter-la-liste-des-livres" data-toc="exercice-7-impl-menter-la-liste-des-livres">Exercice 7 : Impl&eacute;menter la liste des livres</h2><p id="-9y7clz_85">Maintenant, c'est votre tour ! Appliquez la m&ecirc;me d&eacute;marche pour la User Story 2 : &quot;En tant qu'utilisateur, je veux pouvoir lister tous les livres disponibles pour parcourir le catalogue.&quot;</p><p id="-9y7clz_86"><span class="control" id="-9y7clz_88">Votre mission :</span></p><ol class="list _decimal" id="-9y7clz_87" type="1"><li class="list__item" id="-9y7clz_89"><p id="-9y7clz_94"><span class="control" id="-9y7clz_95">Ajoutez un sc&eacute;nario</span> &agrave; <code class="code" id="-9y7clz_96">book_management.feature</code> pour d&eacute;crire ce comportement. Pensez &agrave; v&eacute;rifier que la liste retourn&eacute;e n'est pas vide et qu'elle contient le bon nombre d'&eacute;l&eacute;ments d&eacute;finis dans le <code class="code" id="-9y7clz_97">Background</code>.</p></li><li class="list__item" id="-9y7clz_90"><p id="-9y7clz_98"><span class="control" id="-9y7clz_99">Ex&eacute;cutez</span>, r&eacute;cup&eacute;rez les snippets, et impl&eacute;mentez les steps de test dans la classe <code class="code" id="-9y7clz_100">BookManagementStepDefinitions</code>. L'appel sera un <code class="code" id="-9y7clz_101">GET /api/books</code>.</p></li><li class="list__item" id="-9y7clz_91"><p id="-9y7clz_102"><span class="control" id="-9y7clz_103">Observez l'&eacute;chec</span> (ROUGE).</p></li><li class="list__item" id="-9y7clz_92"><p id="-9y7clz_104"><span class="control" id="-9y7clz_105">&Eacute;crivez le code</span> dans <code class="code" id="-9y7clz_106">BookController</code> pour faire passer le test (VERT).</p></li><li class="list__item" id="-9y7clz_93"><p id="-9y7clz_107">V&eacute;rifiez que le corps de la r&eacute;ponse JSON contient bien un tableau de 2 livres. Utilisez <code class="code" id="-9y7clz_108">jsonPath(&quot;$.size()&quot;).value(2)</code>.</p></li></ol></section><section class="chapter"><div class="collapse"><div class="collapse__title"><h2 id="correction-exercice-7" data-toc="correction-exercice-7">Correction exercice 7</h2></div><div class="collapse__content"><p id="-9y7clz_109"><span class="control" id="-9y7clz_120">1. Sc&eacute;nario ajout&eacute; &agrave; <code class="code" id="-9y7clz_121">book_management.feature</code></span></p><div class="code-block" data-lang="gherkin">
+  Scenario: Lister tous les livres du catalogue
+    When je demande la liste de tous les livres
+    Then je dois recevoir une liste contenant 2 livres
+    And la réponse est un succès
+</div><p id="-9y7clz_111"><span class="control" id="-9y7clz_122">2. Impl&eacute;mentation des Steps dans <code class="code" id="-9y7clz_123">BookManagementStepDefinitions.java</code></span></p><div class="code-block" data-lang="java">
+// Dans BookManagementStepDefinitions.java
+
+@When(&quot;je demande la liste de tous les livres&quot;)
+public void je_demande_la_liste_de_tous_les_livres() throws Exception {
+    resultActions = mockMvc.perform(get(&quot;/api/books&quot;)
+            .accept(MediaType.APPLICATION_JSON));
+}
+
+@Then(&quot;je dois recevoir une liste contenant {int} livres&quot;)
+public void je_dois_recevoir_une_liste_contenant_livres(int count)
+        throws Exception {
+    resultActions.andExpect(jsonPath(&quot;$.size()&quot;).value(count));
+}
+
+@Then(&quot;la réponse est un succès&quot;)
+public void la_reponse_est_un_succes() throws Exception {
+    resultActions.andExpect(status().isOk());
+}
+</div><p id="-9y7clz_113"><span class="control" id="-9y7clz_124">3. Code de production dans <code class="code" id="-9y7clz_125">BookController.java</code></span></p><div class="code-block" data-lang="java">
+// Dans BookController.java
+
+@GetMapping
+public ResponseEntity&lt;List&lt;Book&gt;&gt; getAllBooks() {
+    List&lt;Book&gt; books = bookRepository.findAll();
+    return ResponseEntity.ok(books);
+}
+</div><p id="-9y7clz_115">En lan&ccedil;ant les tests apr&egrave;s ces ajouts, tous les sc&eacute;narios devraient passer au vert.</p><p id="-9y7clz_116"><span class="control" id="-9y7clz_126">Appel API correspondant (format <code class="code" id="-9y7clz_127">HTTPClient</code>)</span></p><div class="code-block" data-lang="http">
+GET http://localhost:8080/api/books
+Accept: application/json
+
+###
+</div><p id="-9y7clz_118">La r&eacute;ponse attendue serait un JSON contenant un tableau avec les deux livres, &quot;Dune&quot; et &quot;Foundation&quot;.</p></div></div></section><section class="chapter"><h2 id="conclusion-de-cette-partie" data-toc="conclusion-de-cette-partie">Conclusion de cette partie</h2><p id="-9y7clz_128">Vous l'avez fait ! Vous avez pris en charge des besoins m&eacute;tier et les avez transform&eacute;s en fonctionnalit&eacute;s logicielles solides, fiables et v&eacute;rifiables. Ce n'est pas juste un exercice technique ; c'est le c&oelig;ur du m&eacute;tier de Concepteur D&eacute;veloppeur d'Applications.</p><p id="-9y7clz_129">Vous avez prouv&eacute; que vous pouvez utiliser le BDD non pas comme une contrainte, mais comme un guide qui s&eacute;curise votre d&eacute;veloppement et garantit la qualit&eacute;.</p><p id="-9y7clz_130">Dans la derni&egrave;re partie de ce module, nous allons prendre un peu de recul et discuter des grandes r&egrave;gles d'or du BDD et d'un dernier aspect pratique tr&egrave;s important : comment partager vos r&eacute;sultats de test avec le reste de l'&eacute;quipe.</p></section><div class="last-modified">18 juillet 2025</div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom"><a href="005-00-spring-application-layers.html" class="navigation-links__prev">Chapitre 5 : Tester les Diff&eacute;rentes Couches de l'Application Spring</a><a href="006-01-best-practices.html" class="navigation-links__next">Chapitre 6 : Projet de Synth&egrave;se et Bonnes Pratiques - Pour aller plus loin</a></div></article><div id="disqus_thread"></div></div></section></main></div><script src="https://resources.jetbrains.com/writerside/apidoc/6.22.0-b776/app.js"></script></body></html>

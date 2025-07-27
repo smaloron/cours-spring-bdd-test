@@ -109,7 +109,7 @@ haut à droite de l'éditeur `pom.xml`).
 Une bonne organisation est la clé. Voici la structure de répertoires que nous allons adopter. Elle est standard et
 facile à comprendre.
 
-![structure-des-dossiers-de-test-Structure_des_Répertoires_de_Test.svg](../../uml/structure-des-dossiers-de-test-Structure_des_Répertoires_de_Test.svg)
+![structure-des-dossiers-de-test-Structure_des_Répertoires_de_Test.svg](../images/structure-des-dossiers-de-test-Structure_des_Repertoires_de_Test.svg)
 
 <!--
 ```plantuml

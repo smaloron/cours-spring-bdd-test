@@ -1,0 +1,291 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en-US" data-preset="contrast" data-primary-color="#307FFF"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="robots" content="noindex"><meta name="built-on" content="2025-07-27T21:45:01.488254"><title>Chapitre 5 : Tester les Diff&eacute;rentes Couches de l'Application Spring | Behaviour driven dev</title><script type="application/json" id="virtual-toc-data">[{"id":"objectifs-p-dagogiques","level":0,"title":"Objectifs pédagogiques","anchor":"#objectifs-p-dagogiques"},{"id":"introduction-le-m-canicien-et-le-pilote","level":0,"title":"Introduction : Le Mécanicien et le Pilote","anchor":"#introduction-le-m-canicien-et-le-pilote"},{"id":"1-tester-la-couche-service-avec-mockito","level":0,"title":"1. Tester la Couche Service avec Mockito","anchor":"#1-tester-la-couche-service-avec-mockito"},{"id":"2-tester-la-couche-de-persistance-jpa","level":0,"title":"2. Tester la Couche de Persistance (JPA)","anchor":"#2-tester-la-couche-de-persistance-jpa"},{"id":"exercice-6-tester-un-service-avec-un-mock","level":0,"title":"Exercice 6 : Tester un service avec un mock","anchor":"#exercice-6-tester-un-service-avec-un-mock"},{"id":"correction-exercice-6","level":0,"title":"Correction exercice 6","anchor":"#correction-exercice-6"},{"id":"auto-valuation","level":0,"title":"Auto-évaluation","anchor":"#auto-valuation"},{"id":"conclusion-le-bon-outil-pour-le-bon-travail","level":0,"title":"Conclusion : Le bon outil pour le bon travail","anchor":"#conclusion-le-bon-outil-pour-le-bon-travail"}]</script><script type="application/json" id="topic-shortcuts"></script><link href="https://resources.jetbrains.com/writerside/apidoc/6.22.0-b776/app.css" rel="stylesheet"><meta name="msapplication-TileColor" content="#000000"><link rel="apple-touch-icon" sizes="180x180" href="https://jetbrains.com/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="https://jetbrains.com/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="https://jetbrains.com/favicon-16x16.png"><meta name="msapplication-TileImage" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-144x144.png"><meta name="msapplication-square70x70logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-70x70.png"><meta name="msapplication-square150x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-150x150.png"><meta name="msapplication-wide310x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x150.png"><meta name="msapplication-square310x310logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x310.png"><meta name="image" content=""><!-- Open Graph --><meta property="og:title" content="Chapitre 5 : Tester les Diff&eacute;rentes Couches de l'Application Spring | Behaviour driven dev"><meta property="og:description" content=""><meta property="og:image" content=""><meta property="og:site_name" content="Behaviour driven dev Help"><meta property="og:type" content="website"><meta property="og:locale" content="en_US"><meta property="og:url" content="writerside-documentation/005-00-spring-application-layers.html"><!-- End Open Graph --><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content=""><meta name="twitter:title" content="Chapitre 5 : Tester les Diff&eacute;rentes Couches de l'Application Spring | Behaviour driven dev"><meta name="twitter:description" content=""><meta name="twitter:creator" content=""><meta name="twitter:image:src" content=""><!-- End Twitter Card --><!-- Schema.org WebPage --><script type="application/ld+json">{
+    "@context": "http://schema.org",
+    "@type": "WebPage",
+    "@id": "writerside-documentation/005-00-spring-application-layers.html#webpage",
+    "url": "writerside-documentation/005-00-spring-application-layers.html",
+    "name": "Chapitre 5 : Tester les Diff&eacute;rentes Couches de l'Application Spring | Behaviour driven dev",
+    "description": "",
+    "image": "",
+    "inLanguage":"en-US"
+}</script><!-- End Schema.org --><!-- Schema.org WebSite --><script type="application/ld+json">{
+    "@type": "WebSite",
+    "@id": "writerside-documentation/#website",
+    "url": "writerside-documentation/",
+    "name": "Behaviour driven dev Help"
+}</script><!-- End Schema.org --></head><body data-id="005-00-spring-application-layers" data-main-title="Chapitre 5 : Tester les Différentes Couches de l'Application Spring" data-article-props="{&quot;seeAlsoStyle&quot;:&quot;links&quot;}" data-template="article" data-breadcrumbs=""><div class="wrapper"><main class="panel _main"><header class="panel__header"><div class="container"><h3>Behaviour driven dev  Help</h3><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="005-00-spring-application-layers" id="005-00-spring-application-layers.md">Chapitre 5 : Tester les Différentes Couches de l'Application Spring</h1><p id="i7yk8b_3">Jusqu'&agrave; pr&eacute;sent, nos sc&eacute;narios BDD agissaient comme un utilisateur final : ils envoyaient une requ&ecirc;te HTTP et v&eacute;rifiaient la r&eacute;ponse. C'est excellent pour valider le comportement global. Mais que se passe-t-il si une logique m&eacute;tier complexe se trouve dans une classe de <code class="code" id="i7yk8b_13">Service</code>? Devons-nous syst&eacute;matiquement cr&eacute;er un <code class="code" id="i7yk8b_14">Controller</code> juste pour pouvoir la tester ? Non.</p><p id="i7yk8b_4">Le BDD est une technique de sp&eacute;cification de comportement. Ce comportement peut se situer &agrave; n'importe quel niveau : API, service, ou m&ecirc;me un composant de calcul complexe. Nous allons apprendre &agrave; adapter nos tests BDD pour qu'ils se concentrent sur la bonne couche, au bon moment.</p><section class="chapter"><h2 id="objectifs-p-dagogiques" data-toc="objectifs-p-dagogiques">Objectifs p&eacute;dagogiques</h2><p id="i7yk8b_15">&Agrave; la fin de ce chapitre, vous serez capable de :</p><ul class="list _bullet" id="i7yk8b_16"><li class="list__item" id="i7yk8b_17"><p id="i7yk8b_22"><span class="control" id="i7yk8b_23">Comprendre la diff&eacute;rence</span> entre un test d'int&eacute;gration complet et un test de couche de service.</p></li><li class="list__item" id="i7yk8b_18"><p id="i7yk8b_24"><span class="control" id="i7yk8b_25">&Eacute;crire un sc&eacute;nario BDD</span> qui cible directement la logique d'une classe de <code class="code" id="i7yk8b_26">@Service</code>.</p></li><li class="list__item" id="i7yk8b_19"><p id="i7yk8b_27"><span class="control" id="i7yk8b_28">Utiliser Mockito</span> et l'annotation <code class="code" id="i7yk8b_29">@MockBean</code> pour simuler (mocker) les d&eacute;pendances (comme les repositories) et isoler le service test&eacute;.</p></li><li class="list__item" id="i7yk8b_20"><p id="i7yk8b_30"><span class="control" id="i7yk8b_31">Tester la couche de persistance</span> avec <code class="code" id="i7yk8b_32">@DataJpaTest</code> pour ne charger que le contexte JPA.</p></li><li class="list__item" id="i7yk8b_21"><p id="i7yk8b_33"><span class="control" id="i7yk8b_34">Organiser</span> vos fichiers <code class="code" id="i7yk8b_35">.feature</code> et vos &quot;Step Definitions&quot; par domaine fonctionnel pour une meilleure maintenabilit&eacute;.</p></li></ul></section><section class="chapter"><h2 id="introduction-le-m-canicien-et-le-pilote" data-toc="introduction-le-m-canicien-et-le-pilote">Introduction : Le M&eacute;canicien et le Pilote</h2><p id="i7yk8b_36">Imaginez une voiture de course. Le <span class="control" id="i7yk8b_39">pilote</span> fait un test &quot;end-to-end&quot; : il prend la voiture, fait un tour de circuit et v&eacute;rifie le chrono. C'est ce que nous avons fait jusqu'&agrave; pr&eacute;sent avec <code class="code" id="i7yk8b_40">MockMvc</code>. On teste le syst&egrave;me dans son ensemble.</p><p id="i7yk8b_37">Mais parfois, le <span class="control" id="i7yk8b_41">m&eacute;canicien</span> veut juste tester le moteur. Il ne va pas mettre la voiture sur le circuit. Il va la mettre sur un banc d'essai, brancher des capteurs, simuler l'arriv&eacute;e d'essence et la commande d'acc&eacute;l&eacute;ration, et mesurer la puissance directement &agrave; la sortie du moteur.</p><p id="i7yk8b_38">Dans ce chapitre, nous allons devenir des m&eacute;caniciens. Nous allons mettre notre <code class="code" id="i7yk8b_42">@Service</code> sur un &quot;banc d'essai&quot;, simuler ses d&eacute;pendances (le <code class="code" id="i7yk8b_43">@Repository</code>) et v&eacute;rifier sa logique m&eacute;tier de mani&egrave;re isol&eacute;e.</p></section><section class="chapter"><h2 id="1-tester-la-couche-service-avec-mockito" data-toc="1-tester-la-couche-service-avec-mockito">1. Tester la Couche Service avec Mockito</h2><p id="i7yk8b_44">La couche de service contient souvent la logique m&eacute;tier la plus riche de votre application. C'est l&agrave; que les r&egrave;gles de gestion, les calculs et les orchestrations se produisent.</p><p id="i7yk8b_45"><span class="control" id="i7yk8b_55">Sc&eacute;nario :</span> Imaginons un service qui calcule le prix de location d'un livre en fonction de son ann&eacute;e de publication. Les livres r&eacute;cents sont plus chers.</p><p id="i7yk8b_46"><span class="control" id="i7yk8b_56"><code class="code" id="i7yk8b_57">src/test/resources/features/pricing/book_pricing.feature</code></span></p><div class="code-block" data-lang="gherkin">
+Feature: Calcul du prix de location d'un livre
+
+  Scenario Outline: Le prix de location dépend de l'année de publication
+    Given un livre publié en &lt;annee_publication&gt;
+    When je calcule le prix de location de ce livre
+    Then le prix calculé doit être de &lt;prix_attendu&gt; euros
+
+    Examples:
+      | annee_publication | prix_attendu |
+      | 2023              | 5.0          |
+      | 2010              | 3.5          |
+      | 1995              | 2.0          |
+</div><p id="i7yk8b_48">Ce sc&eacute;nario ne parle pas d'API, de HTTP ou de JSON. Il parle de &quot;calculer un prix&quot;. C'est un pur test de logique m&eacute;tier.</p><p id="i7yk8b_49">Pour l'impl&eacute;menter, nous n'avons pas besoin de <code class="code" id="i7yk8b_58">MockMvc</code>. &Agrave; la place, nous allons injecter notre service directement et <span class="control" id="i7yk8b_59">mocker</span> sa d&eacute;pendance (le <code class="code" id="i7yk8b_60">BookRepository</code>).</p><p id="i7yk8b_50"><span class="control" id="i7yk8b_61">Le Service &agrave; tester (<code class="code" id="i7yk8b_62">BookPricingService.java</code>)</span></p><div class="code-block" data-lang="java">
+package fr.formation.spring.librarymanagement.service;
+
+import fr.formation.spring.librarymanagement.domain.Book;
+import fr.formation.spring.librarymanagement.repository.BookRepository;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+
+@Service
+public class BookPricingService {
+
+    private final BookRepository bookRepository;
+
+    public BookPricingService(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
+
+    public double calculateRentalPrice(String isbn) {
+        Book book = bookRepository.findById(isbn)
+                .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Book not found&quot;));
+
+        int currentYear = LocalDate.now().getYear();
+        if (book.getPublicationYear() &gt; currentYear - 5) {
+            return 5.0; // Moins de 5 ans
+        } else if (book.getPublicationYear() &gt; currentYear - 20) {
+            return 3.5; // Moins de 20 ans
+        } else {
+            return 2.0; // Plus de 20 ans
+        }
+    }
+}
+</div><p id="i7yk8b_52"><span class="control" id="i7yk8b_63">La classe de Step Definitions (<code class="code" id="i7yk8b_64">BookPricingStepDefinitions.java</code>)</span></p><div class="code-block" data-lang="java">
+package fr.formation.spring.librarymanagement.bdd;
+
+import fr.formation.spring.librarymanagement.domain.Book;
+import fr.formation.spring.librarymanagement.repository.BookRepository;
+import fr.formation.spring.librarymanagement.service.BookPricingService;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
+
+@SpringBootTest
+public class BookPricingStepDefinitions {
+
+    // Le service que nous voulons tester
+    @Autowired
+    private BookPricingService pricingService;
+
+    // La dépendance du service, que nous allons MOCKER
+    @MockBean
+    private BookRepository bookRepository;
+
+    private String currentIsbn;
+    private double calculatedPrice;
+
+    @Given(&quot;un livre publié en {int}&quot;)
+    public void un_livre_publie_en(int publicationYear) {
+        // 1. Créer un faux livre
+        Book mockBook = new Book();
+        this.currentIsbn = &quot;isbn-&quot; + publicationYear;
+        mockBook.setIsbn(this.currentIsbn);
+        mockBook.setPublicationYear(publicationYear);
+
+        // 2. Dire à Mockito : &quot;Quand le service appellera
+        //    bookRepository.findById avec cet ISBN,
+        //    retourne notre faux livre.&quot;
+        when(bookRepository.findById(this.currentIsbn))
+                .thenReturn(Optional.of(mockBook));
+    }
+
+    @When(&quot;je calcule le prix de location de ce livre&quot;)
+    public void je_calcule_le_prix_de_location_de_ce_livre() {
+        // 3. Appeler directement la méthode du service
+        this.calculatedPrice = pricingService
+                .calculateRentalPrice(this.currentIsbn);
+    }
+
+    @Then(&quot;le prix calculé doit être de {double} euros&quot;)
+    public void le_prix_calcule_doit_etre_de_euros(Double expectedPrice) {
+        // 4. Vérifier le résultat
+        assertThat(this.calculatedPrice).isEqualTo(expectedPrice);
+    }
+}
+</div><aside class="prompt" data-type="warning" data-title="" id="i7yk8b_54"><p>**La puissance de <code class="code" id="i7yk8b_65">@MockBean</code>** </p><ul class="list _bullet" id="i7yk8b_66"><li class="list__item" id="i7yk8b_67"><p><code class="code" id="i7yk8b_70">@MockBean</code> remplace le vrai <code class="code" id="i7yk8b_71">BookRepository</code> dans le contexte Spring par un &quot;mock&quot; (un double) fourni par la biblioth&egrave;que Mockito.</p></li><li class="list__item" id="i7yk8b_68"><p>Le mock ne fait rien par d&eacute;faut. C'est &agrave; nous de lui dire comment se comporter avec <code class="code" id="i7yk8b_72">when(...).thenReturn(...)</code>.</p></li><li class="list__item" id="i7yk8b_69"><p>Cela nous permet de <b id="i7yk8b_73">tester le <code class="code" id="i7yk8b_74">BookPricingService</code> en isolation totale</b> de la base de donn&eacute;es. Le test est plus rapide et ne d&eacute;pend pas de l'&eacute;tat de la base.</p></li></ul></aside></section><section class="chapter"><h2 id="2-tester-la-couche-de-persistance-jpa" data-toc="2-tester-la-couche-de-persistance-jpa">2. Tester la Couche de Persistance (JPA)</h2><p id="i7yk8b_75">Parfois, on veut s'assurer que nos requ&ecirc;tes JPA, nos entit&eacute;s et leurs relations fonctionnent correctement. Dans ce cas, nous voulons une vraie base de donn&eacute;es (en m&eacute;moire, comme H2), mais nous n'avons pas besoin de toute la couche Web ( Contr&ocirc;leurs, Services...).</p><p id="i7yk8b_76">Spring Boot fournit une annotation parfaite pour cela : <code class="code" id="i7yk8b_84">@DataJpaTest</code>.</p><p id="i7yk8b_77"><span class="control" id="i7yk8b_85">Sc&eacute;nario :</span> S'assurer qu'un livre peut &ecirc;tre sauvegard&eacute; et retrouv&eacute;.</p><p id="i7yk8b_78"><span class="control" id="i7yk8b_86"><code class="code" id="i7yk8b_87">src/test/resources/features/persistence/book_persistence.feature</code></span></p><div class="code-block" data-lang="gherkin">
+Feature: Persistance de l'entité Livre
+
+  Scenario: Sauvegarder et retrouver un livre
+    Given je crée un nouvel objet Livre avec le titre &quot;Le Petit Prince&quot;
+    When je sauvegarde ce livre dans la base de données
+    Then je dois pouvoir retrouver le livre &quot;Le Petit Prince&quot; depuis la base
+</div><p id="i7yk8b_80"><span class="control" id="i7yk8b_88">La classe de Step Definitions (<code class="code" id="i7yk8b_89">BookPersistenceStepDefinitions.java</code>)</span></p><div class="code-block" data-lang="java">
+package fr.formation.spring.librarymanagement.bdd;
+
+import fr.formation.spring.librarymanagement.domain.Book;
+import fr.formation.spring.librarymanagement.repository.BookRepository;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+// @DataJpaTest ne charge que le strict nécessaire pour JPA !
+// C'est beaucoup plus léger et rapide que @SpringBootTest.
+@DataJpaTest
+public class BookPersistenceStepDefinitions {
+
+    // Injecte un EntityManager spécial pour les tests, très pratique.
+    @Autowired
+    private TestEntityManager entityManager;
+
+    @Autowired
+    private BookRepository bookRepository;
+
+    private Book newBook;
+
+    @Given(&quot;je crée un nouvel objet Livre avec le titre {string}&quot;)
+    public void je_cree_un_nouvel_objet_Livre_avec_le_titre(String title) {
+        newBook = new Book();
+        newBook.setIsbn(&quot;978-2070612758&quot;);
+        newBook.setTitle(title);
+        newBook.setAuthor(&quot;Antoine de Saint-Exupéry&quot;);
+        newBook.setPublicationYear(1943);
+    }
+
+    @When(&quot;je sauvegarde ce livre dans la base de données&quot;)
+    public void je_sauvegarde_ce_livre_dans_la_base_de_donnees() {
+        // Utiliser le repository pour sauvegarder
+        bookRepository.save(newBook);
+    }
+
+    @Then(&quot;je dois pouvoir retrouver le livre {string} depuis la base&quot;)
+    public void je_dois_pouvoir_retrouver_le_livre(String title) {
+        // entityManager.flush(); // Force la synchronisation avec la BDD
+        Book foundBook = bookRepository.findById(&quot;978-2070612758&quot;)
+                .orElse(null);
+
+        assertThat(foundBook).isNotNull();
+        assertThat(foundBook.getTitle()).isEqualTo(title);
+    }
+}
+</div><aside class="prompt" data-type="warning" data-title="" id="i7yk8b_82"><p>**Quand utiliser <code class="code" id="i7yk8b_90">@DataJpaTest</code>?** Utilisez cette approche lorsque vous voulez tester : </p><ul class="list _bullet" id="i7yk8b_91"><li class="list__item" id="i7yk8b_92"><p>Des relations complexes entre entit&eacute;s (<code class="code" id="i7yk8b_95">@OneToMany</code>, <code class="code" id="i7yk8b_96">@ManyToMany</code>...).</p></li><li class="list__item" id="i7yk8b_93"><p>Des requ&ecirc;tes personnalis&eacute;es &eacute;crites avec <code class="code" id="i7yk8b_97">@Query</code> dans vos repositories.</p></li><li class="list__item" id="i7yk8b_94"><p>Le bon fonctionnement des cascades (<code class="code" id="i7yk8b_98">CascadeType</code>) ou du chargement (<code class="code" id="i7yk8b_99">FetchType</code>).</p></li></ul><p> C'est un test d'int&eacute;gration cibl&eacute; sur la couche de persistance.</p></aside></section><section class="chapter"><h2 id="exercice-6-tester-un-service-avec-un-mock" data-toc="exercice-6-tester-un-service-avec-un-mock">Exercice 6 : Tester un service avec un mock</h2><p id="i7yk8b_100">Maintenant, &agrave; vous de jouer ! Nous allons cr&eacute;er un service simple qui v&eacute;rifie si un livre est un &quot;classique&quot; (publi&eacute; il y a plus de 50 ans).</p><p id="i7yk8b_101"><span class="control" id="i7yk8b_105">Votre mission :</span></p><ol class="list _decimal" id="i7yk8b_102" type="1"><li class="list__item" id="i7yk8b_106"><p id="i7yk8b_111"><span class="control" id="i7yk8b_112">Cr&eacute;ez</span> la classe <code class="code" id="i7yk8b_113">BookQualificationService</code> avec une m&eacute;thode <code class="code" id="i7yk8b_114">isClassic(String isbn)</code>. Cette m&eacute;thode utilisera le <code class="code" id="i7yk8b_115">BookRepository</code> pour trouver le livre et v&eacute;rifier son ann&eacute;e.</p></li><li class="list__item" id="i7yk8b_107"><p id="i7yk8b_116"><span class="control" id="i7yk8b_117">Cr&eacute;ez</span> le fichier <code class="code" id="i7yk8b_118">book_qualification.feature</code> avec un <code class="code" id="i7yk8b_119">Scenario Outline</code> pour tester le cas d'un livre classique et celui d'un livre moderne.</p></li><li class="list__item" id="i7yk8b_108"><p id="i7yk8b_120"><span class="control" id="i7yk8b_121">Cr&eacute;ez</span> la classe de Step Definitions <code class="code" id="i7yk8b_122">BookQualificationStepDefinitions</code>.</p></li><li class="list__item" id="i7yk8b_109"><p id="i7yk8b_123">Dans cette classe, <span class="control" id="i7yk8b_124">utilisez <code class="code" id="i7yk8b_126">@MockBean</code></span> pour mocker le <code class="code" id="i7yk8b_125">BookRepository</code>.</p></li><li class="list__item" id="i7yk8b_110"><p id="i7yk8b_127">Impl&eacute;mentez les &eacute;tapes <code class="code" id="i7yk8b_128">Given</code>, <code class="code" id="i7yk8b_129">When</code>, <code class="code" id="i7yk8b_130">Then</code> pour appeler votre service et v&eacute;rifier le r&eacute;sultat bool&eacute;en.</p></li></ol><p id="i7yk8b_103"><span class="control" id="i7yk8b_131"><code class="code" id="i7yk8b_132">BookQualificationService.java</code> (&agrave; cr&eacute;er)</span></p><div class="code-block" data-lang="java">
+package fr.formation.spring.librarymanagement.service;
+
+// ...
+@Service
+public class BookQualificationService {
+    private final BookRepository bookRepository;
+    // ... constructeur ...
+
+    public boolean isClassic(String isbn) {
+        // Logique à implémenter :
+        // 1. Chercher le livre par ISBN.
+        // 2. Si non trouvé, lancer une exception.
+        // 3. Comparer son année de publication à l'année actuelle - 50.
+        // 4. Retourner true ou false.
+    }
+}
+</div></section><section class="chapter"><div class="collapse"><div class="collapse__title"><h2 id="correction-exercice-6" data-toc="correction-exercice-6">Correction exercice 6</h2></div><div class="collapse__content"><p id="i7yk8b_133"><span class="control" id="i7yk8b_140">1. <code class="code" id="i7yk8b_141">BookQualificationService.java</code> (impl&eacute;ment&eacute;)</span></p><div class="code-block" data-lang="java">
+package fr.formation.spring.librarymanagement.service;
+
+import fr.formation.spring.librarymanagement.domain.Book;
+import fr.formation.spring.librarymanagement.repository.BookRepository;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.NoSuchElementException;
+
+@Service
+public class BookQualificationService {
+
+    private final BookRepository bookRepository;
+
+    public BookQualificationService(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
+
+    public boolean isClassic(String isbn) {
+        Book book = bookRepository.findById(isbn)
+                .orElseThrow(() -&gt; new NoSuchElementException(
+                        &quot;Book with ISBN &quot; + isbn + &quot; not found.&quot;)
+                );
+
+        int classicThresholdYear = LocalDate.now().getYear() - 50;
+        return book.getPublicationYear() &lt;= classicThresholdYear;
+    }
+}
+</div><p id="i7yk8b_135"><span class="control" id="i7yk8b_142">2. <code class="code" id="i7yk8b_143">book_qualification.feature</code></span></p><div class="code-block" data-lang="gherkin">
+Feature: Qualification d'un livre (classique ou moderne)
+
+  Scenario Outline: Vérifier si un livre est un classique
+    Given un livre publié en &lt;annee_publication&gt;
+    When je qualifie ce livre
+    Then le résultat doit être que le livre est un classique : &lt;est_classique&gt;
+
+    Examples:
+      | annee_publication | est_classique |
+      | 1965              | true          |
+      | 2020              | false         |
+</div><p id="i7yk8b_137"><span class="control" id="i7yk8b_144">3. <code class="code" id="i7yk8b_145">BookQualificationStepDefinitions.java</code></span></p><div class="code-block" data-lang="java">
+package fr.formation.spring.librarymanagement.bdd;
+
+import fr.formation.spring.librarymanagement.domain.Book;
+import fr.formation.spring.librarymanagement.repository.BookRepository;
+import fr.formation.spring.librarymanagement.service.BookQualificationService;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
+
+@SpringBootTest
+public class BookQualificationStepDefinitions {
+
+    @Autowired
+    private BookQualificationService qualificationService;
+
+    @MockBean
+    private BookRepository bookRepository;
+
+    private String currentIsbn;
+    private boolean isClassicResult;
+
+    @Given(&quot;un livre publié en {int}&quot;)
+    public void un_livre_publie_en(int publicationYear) {
+        this.currentIsbn = &quot;isbn-&quot; + publicationYear;
+        Book mockBook = new Book();
+        mockBook.setIsbn(this.currentIsbn);
+        mockBook.setPublicationYear(publicationYear);
+
+        when(bookRepository.findById(this.currentIsbn))
+                .thenReturn(Optional.of(mockBook));
+    }
+
+    @When(&quot;je qualifie ce livre&quot;)
+    public void je_qualifie_ce_livre() {
+        this.isClassicResult = qualificationService.isClassic(currentIsbn);
+    }
+
+    @Then(&quot;le résultat doit être que le livre est un classique : {string}&quot;)
+    public void le_resultat_doit_etre_que_le_livre_est_un_classique(String expected) {
+        boolean expectedBoolean = Boolean.parseBoolean(expected);
+        assertThat(this.isClassicResult).isEqualTo(expectedBoolean);
+    }
+}
+</div></div></div></section><section class="chapter"><h2 id="auto-valuation" data-toc="auto-valuation">Auto-&eacute;valuation</h2><ol class="list _decimal" id="i7yk8b_146" type="1"><li class="list__item" id="i7yk8b_148"><p id="i7yk8b_153"><span class="control" id="i7yk8b_154">Quand est-il pr&eacute;f&eacute;rable d'utiliser <code class="code" id="i7yk8b_156">@MockBean</code> dans un test BDD ?</span> a) Quand on veut tester une API REST de bout en bout. b) Quand on veut tester la logique d'un composant (ex: un Service) en l'isolant de ses d&eacute;pendances (ex: un Repository). c) Quand on veut v&eacute;rifier que des entit&eacute;s JPA sont correctement mapp&eacute;es. d) <code class="code" id="i7yk8b_155">@MockBean</code> n'est pas utilis&eacute; avec Cucumber.</p></li><li class="list__item" id="i7yk8b_149"><p id="i7yk8b_157"><span class="control" id="i7yk8b_158">Quelle annotation Spring Boot est la plus adapt&eacute;e pour tester la couche de persistance seule ?</span> a) <code class="code" id="i7yk8b_159">@SpringBootTest</code> b) <code class="code" id="i7yk8b_160">@WebMvcTest</code> c) <code class="code" id="i7yk8b_161">@DataJpaTest</code> d) <code class="code" id="i7yk8b_162">@ServiceTest</code></p></li><li class="list__item" id="i7yk8b_150"><p id="i7yk8b_163"><span class="control" id="i7yk8b_164">Dans un test de service utilisant un <code class="code" id="i7yk8b_166">@MockBean</code> pour le repository, o&ugrave; la donn&eacute;e &quot;livre&quot; existe-t-elle r&eacute;ellement ?</span> a) Dans la base de donn&eacute;es H2. b) En m&eacute;moire, dans un objet cr&eacute;&eacute; par Mockito pour la dur&eacute;e du test. c) Dans un fichier JSON charg&eacute; au d&eacute;marrage. d) Elle n'existe pas, le service retourne toujours <code class="code" id="i7yk8b_165">null</code>.</p></li><li class="list__item" id="i7yk8b_151"><p id="i7yk8b_167"><span class="control" id="i7yk8b_168">D&eacute;crivez une situation o&ugrave; il serait plus judicieux d'&eacute;crire un sc&eacute;nario BDD pour un service plut&ocirc;t que pour un contr&ocirc;leur.</span></p></li><li class="list__item" id="i7yk8b_152"><p id="i7yk8b_169"><span class="control" id="i7yk8b_170">Quelle est la principale diff&eacute;rence, en termes de contexte Spring charg&eacute;, entre un test annot&eacute; <code class="code" id="i7yk8b_171">@SpringBootTest</code> et un test annot&eacute; <code class="code" id="i7yk8b_172">@DataJpaTest</code>? Quel est l'impact sur la vitesse d'ex&eacute;cution des tests ?</span></p></li></ol></section><section class="chapter"><h2 id="conclusion-le-bon-outil-pour-le-bon-travail" data-toc="conclusion-le-bon-outil-pour-le-bon-travail">Conclusion : Le bon outil pour le bon travail</h2><p id="i7yk8b_173">Vous avez maintenant une bo&icirc;te &agrave; outils de test BDD beaucoup plus compl&egrave;te. Vous n'&ecirc;tes plus limit&eacute; aux tests &quot; end-to-end&quot;, vous pouvez choisir avec pr&eacute;cision la couche de l'application que vous souhaitez sp&eacute;cifier et valider.</p><p id="i7yk8b_174">Vous avez appris &agrave; :</p><ul class="list _bullet" id="i7yk8b_175"><li class="list__item" id="i7yk8b_178"><p id="i7yk8b_181"><span class="control" id="i7yk8b_182">Isoler la logique m&eacute;tier</span> d'un service en simulant ses d&eacute;pendances avec <code class="code" id="i7yk8b_183">@MockBean</code>.</p></li><li class="list__item" id="i7yk8b_179"><p id="i7yk8b_184"><span class="control" id="i7yk8b_185">Valider la couche de persistance</span> de mani&egrave;re efficace et l&eacute;g&egrave;re avec <code class="code" id="i7yk8b_186">@DataJpaTest</code>.</p></li><li class="list__item" id="i7yk8b_180"><p id="i7yk8b_187"><span class="control" id="i7yk8b_188">Adapter vos sc&eacute;narios Gherkin</span> pour qu'ils d&eacute;crivent le comportement de la couche cibl&eacute;e, et non plus seulement celui d'une API.</p></li></ul><p id="i7yk8b_176">Cette flexibilit&eacute; est essentielle dans les projets professionnels. Elle vous permet d'avoir une pyramide de tests &eacute;quilibr&eacute;e : de nombreux tests unitaires et de service rapides et cibl&eacute;s, et des tests d'int&eacute;gration &quot;end-to-end&quot; plus complets mais moins nombreux pour v&eacute;rifier que tout s'assemble correctement.</p><p id="i7yk8b_177">Dans le dernier module, nous allons assembler toutes ces connaissances dans un mini-projet de synth&egrave;se et discuter des bonnes pratiques pour faire du BDD un v&eacute;ritable atout dans votre quotidien de d&eacute;veloppeur.</p></section><div class="last-modified">18 juillet 2025</div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom"><a href="004-00-advanced-techniques.html" class="navigation-links__prev">Chapitre 4 : Techniques Avanc&eacute;es et Gestion de l'&Eacute;tat</a><a href="006-00-final-project.html" class="navigation-links__next">Chapitre 6 : Projet de Synth&egrave;se et Bonnes Pratiques</a></div></article><div id="disqus_thread"></div></div></section></main></div><script src="https://resources.jetbrains.com/writerside/apidoc/6.22.0-b776/app.js"></script></body></html>

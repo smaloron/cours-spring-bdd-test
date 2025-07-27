@@ -1,0 +1,185 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en-US" data-preset="contrast" data-primary-color="#307FFF"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="robots" content="noindex"><meta name="built-on" content="2025-07-27T21:45:01.488778"><title>Chapitre 3 : Premier Sc&eacute;nario BDD de A &agrave; Z : &quot;Hello, BDD!&quot; | Behaviour driven dev</title><script type="application/json" id="virtual-toc-data">[{"id":"objectifs-p-dagogiques","level":0,"title":"Objectifs pédagogiques","anchor":"#objectifs-p-dagogiques"},{"id":"introduction-la-danse-du-bdd","level":0,"title":"Introduction : La Danse du BDD","anchor":"#introduction-la-danse-du-bdd"},{"id":"1-le-sc-nario-cible","level":0,"title":"1. Le Scénario Cible","anchor":"#1-le-sc-nario-cible"},{"id":"2-tape-1-impl-menter-les-step-definitions-passer-de-undefined-rouge","level":0,"title":"2. Étape 1 : Implémenter les Step Definitions (passer de \"undefined\" à \"rouge\")","anchor":"#2-tape-1-impl-menter-les-step-definitions-passer-de-undefined-rouge"},{"id":"3-tape-2-crire-le-code-de-production-passer-de-rouge-vert","level":0,"title":"3. Étape 2 : Écrire le code de production (passer de \"rouge\" à \"vert\")","anchor":"#3-tape-2-crire-le-code-de-production-passer-de-rouge-vert"},{"id":"4-tape-3-valider-le-succ-s-et-affiner-le-test","level":0,"title":"4. Étape 3 : Valider le succès et affiner le test","anchor":"#4-tape-3-valider-le-succ-s-et-affiner-le-test"},{"id":"exercice-4-sc-nario-du-livre-non-trouv","level":0,"title":"Exercice 4 : Scénario du livre non trouvé","anchor":"#exercice-4-sc-nario-du-livre-non-trouv"},{"id":"correction-exercice-4","level":0,"title":"Correction exercice 4","anchor":"#correction-exercice-4"},{"id":"auto-valuation","level":0,"title":"Auto-évaluation","anchor":"#auto-valuation"},{"id":"conclusion-vous-avez-donn-vie-une-sp-cification","level":0,"title":"Conclusion : Vous avez donné vie à une spécification !","anchor":"#conclusion-vous-avez-donn-vie-une-sp-cification"}]</script><script type="application/json" id="topic-shortcuts"></script><link href="https://resources.jetbrains.com/writerside/apidoc/6.22.0-b776/app.css" rel="stylesheet"><meta name="msapplication-TileColor" content="#000000"><link rel="apple-touch-icon" sizes="180x180" href="https://jetbrains.com/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="https://jetbrains.com/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="https://jetbrains.com/favicon-16x16.png"><meta name="msapplication-TileImage" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-144x144.png"><meta name="msapplication-square70x70logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-70x70.png"><meta name="msapplication-square150x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-150x150.png"><meta name="msapplication-wide310x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x150.png"><meta name="msapplication-square310x310logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x310.png"><meta name="image" content=""><!-- Open Graph --><meta property="og:title" content="Chapitre 3 : Premier Sc&eacute;nario BDD de A &agrave; Z : &quot;Hello, BDD!&quot; | Behaviour driven dev"><meta property="og:description" content=""><meta property="og:image" content=""><meta property="og:site_name" content="Behaviour driven dev Help"><meta property="og:type" content="website"><meta property="og:locale" content="en_US"><meta property="og:url" content="writerside-documentation/empty-md-003-00-first-bdd-test.html"><!-- End Open Graph --><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content=""><meta name="twitter:title" content="Chapitre 3 : Premier Sc&eacute;nario BDD de A &agrave; Z : &quot;Hello, BDD!&quot; | Behaviour driven dev"><meta name="twitter:description" content=""><meta name="twitter:creator" content=""><meta name="twitter:image:src" content=""><!-- End Twitter Card --><!-- Schema.org WebPage --><script type="application/ld+json">{
+    "@context": "http://schema.org",
+    "@type": "WebPage",
+    "@id": "writerside-documentation/empty-md-003-00-first-bdd-test.html#webpage",
+    "url": "writerside-documentation/empty-md-003-00-first-bdd-test.html",
+    "name": "Chapitre 3 : Premier Sc&eacute;nario BDD de A &agrave; Z : &quot;Hello, BDD!&quot; | Behaviour driven dev",
+    "description": "",
+    "image": "",
+    "inLanguage":"en-US"
+}</script><!-- End Schema.org --><!-- Schema.org WebSite --><script type="application/ld+json">{
+    "@type": "WebSite",
+    "@id": "writerside-documentation/#website",
+    "url": "writerside-documentation/",
+    "name": "Behaviour driven dev Help"
+}</script><!-- End Schema.org --></head><body data-id="Empty-MD-003-00-first-bdd-test" data-main-title="Chapitre 3 : Premier Scénario BDD de A à Z : &quot;Hello, BDD!&quot;" data-article-props="{&quot;seeAlsoStyle&quot;:&quot;links&quot;}" data-template="article" data-breadcrumbs=""><div class="wrapper"><main class="panel _main"><header class="panel__header"><div class="container"><h3>Behaviour driven dev  Help</h3><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="Empty-MD-003-00-first-bdd-test" id="Empty-MD-003-00-first-bdd-test.md">Chapitre 3 : Premier Scénario BDD de A à Z : &quot;Hello, BDD!&quot;</h1><p id="px9use_3">Bienvenue au c&oelig;ur de l'action ! Dans ce chapitre, nous allons prendre le sc&eacute;nario que nous avons &eacute;crit et faire en sorte qu'il devienne un v&eacute;ritable test automatis&eacute; qui valide le comportement de notre application Spring Boot. Nous allons suivre pas &agrave; pas le cycle BDD, qui est une extension du cycle TDD (Red-Green-Refactor).</p><p id="px9use_4">Ce processus peut sembler un peu long au d&eacute;but, mais il deviendra vite une seconde nature. C'est une danse en plusieurs temps : &eacute;crire la spec, la voir &eacute;chouer, &eacute;crire juste assez de code pour la faire passer.</p><section class="chapter"><h2 id="objectifs-p-dagogiques" data-toc="objectifs-p-dagogiques">Objectifs p&eacute;dagogiques</h2><p id="px9use_15">&Agrave; la fin de ce chapitre, vous serez capable de :</p><ul class="list _bullet" id="px9use_16"><li class="list__item" id="px9use_17"><p id="px9use_23"><span class="control" id="px9use_24">Comprendre et appliquer</span> le cycle de d&eacute;veloppement BDD.</p></li><li class="list__item" id="px9use_18"><p id="px9use_25"><span class="control" id="px9use_26">Impl&eacute;menter</span> des &quot;Step Definitions&quot; en utilisant les snippets g&eacute;n&eacute;r&eacute;s par Cucumber.</p></li><li class="list__item" id="px9use_19"><p id="px9use_27"><span class="control" id="px9use_28">Lier</span> vos classes de test au contexte de l'application Spring Boot avec les bonnes annotations.</p></li><li class="list__item" id="px9use_20"><p id="px9use_29"><span class="control" id="px9use_30">Utiliser <code class="code" id="px9use_31">MockMvc</code></span> pour simuler des appels HTTP vers vos contr&ocirc;leurs REST sans d&eacute;marrer de serveur.</p></li><li class="list__item" id="px9use_21"><p id="px9use_32"><span class="control" id="px9use_33">&Eacute;crire des assertions</span> avec <code class="code" id="px9use_34">AssertJ</code> pour v&eacute;rifier les r&eacute;sultats des appels API.</p></li><li class="list__item" id="px9use_22"><p id="px9use_35"><span class="control" id="px9use_36">Faire passer un sc&eacute;nario</span> de l'&eacute;tat &quot;undefined&quot; &agrave; &quot;failed&quot; (rouge), puis &agrave; &quot;passed&quot; (vert).</p></li></ul></section><section class="chapter"><h2 id="introduction-la-danse-du-bdd" data-toc="introduction-la-danse-du-bdd">Introduction : La Danse du BDD</h2><p id="px9use_37">Imaginez un chor&eacute;graphe et un danseur. Le chor&eacute;graphe (le fichier <code class="code" id="px9use_42">.feature</code>) d&eacute;crit une s&eacute;rie de mouvements : &quot;Fais un pas en avant&quot;, &quot;Tourne sur toi-m&ecirc;me&quot;, &quot;L&egrave;ve le bras&quot;. Au d&eacute;but, le danseur (notre code de production) ne sait pas comment ex&eacute;cuter ces mouvements.</p><p id="px9use_38">Notre travail, en tant que d&eacute;veloppeurs, est d'&ecirc;tre l'interpr&egrave;te. Nous allons d'abord apprendre &agrave; reconna&icirc;tre chaque instruction (impl&eacute;menter les Step Definitions). Puis, pour chaque instruction, nous allons enseigner au danseur comment l'ex&eacute;cuter.</p><p id="px9use_39">Le cycle BDD est cette danse :</p><ol class="list _decimal" id="px9use_40" type="1"><li class="list__item" id="px9use_43"><p id="px9use_49"><span class="control" id="px9use_50">&Eacute;crire le sc&eacute;nario</span> (la chor&eacute;graphie).</p></li><li class="list__item" id="px9use_44"><p id="px9use_51"><span class="control" id="px9use_52">Ex&eacute;cuter et obtenir &quot;undefined&quot;</span> (le danseur ne conna&icirc;t pas les pas).</p></li><li class="list__item" id="px9use_45"><p id="px9use_53"><span class="control" id="px9use_54">Impl&eacute;menter les Step Definitions</span> (on associe une phrase &agrave; une m&eacute;thode Java).</p></li><li class="list__item" id="px9use_46"><p id="px9use_55"><span class="control" id="px9use_56">Ex&eacute;cuter et obtenir &quot;Failed&quot; (Rouge)</span> (le danseur conna&icirc;t le pas, mais l'ex&eacute;cution &eacute;choue car le code de l' application est manquant).</p></li><li class="list__item" id="px9use_47"><p id="px9use_57"><span class="control" id="px9use_58">&Eacute;crire le code de production</span> (on apprend au danseur &agrave; bien faire le mouvement).</p></li><li class="list__item" id="px9use_48"><p id="px9use_59"><span class="control" id="px9use_60">Ex&eacute;cuter et obtenir &quot;Passed&quot; (Vert)</span> (la danse est parfaite !).</p></li></ol><p id="px9use_41">C'est ce que nous allons faire, maintenant.</p></section><section class="chapter"><h2 id="1-le-sc-nario-cible" data-toc="1-le-sc-nario-cible">1. Le Sc&eacute;nario Cible</h2><p id="px9use_61">Reprenons le sc&eacute;nario de notre exercice pr&eacute;c&eacute;dent. Il est simple, clair et parfait pour un premier essai.</p><p id="px9use_62"><span class="control" id="px9use_64">Fichier <code class="code" id="px9use_65">src/test/resources/features/book_search.feature</code></span></p><div class="code-block" data-lang="gherkin">
+Feature: Recherche de livre par ISBN
+  En tant qu'utilisateur, je veux rechercher un livre par son ISBN
+  pour obtenir ses détails complets.
+
+  Scenario: Recherche d'un livre existant avec succès
+    Given un livre existe avec l'ISBN &quot;978-0441013593&quot;
+    When l'utilisateur recherche le livre par cet ISBN
+    Then les détails du livre &quot;Dune&quot; sont retournés
+</div></section><section class="chapter"><h2 id="2-tape-1-impl-menter-les-step-definitions-passer-de-undefined-rouge" data-toc="2-tape-1-impl-menter-les-step-definitions-passer-de-undefined-rouge">2. &Eacute;tape 1 : Impl&eacute;menter les Step Definitions (passer de &quot;undefined&quot; &agrave; &quot;rouge&quot;)</h2><p id="px9use_66">Dans le chapitre pr&eacute;c&eacute;dent, Cucumber nous a gentiment fourni les &quot;snippets&quot; de code. Notre premi&egrave;re t&acirc;che est de les int&eacute;grer dans notre classe <code class="code" id="px9use_73">BookStepDefinitions</code>.</p><section class="procedure-steps"><h3 id="px9use_67" data-toc="px9use_67">Intégrer les snippets et lier à Spring</h3><ol class="list _decimal" id="px9use_74" type="1"><li class="list__item" id="px9use_75"><p id="px9use_80">Ouvrez la classe <code class="code" id="px9use_81">BookStepDefinitions.java</code> (<code class="code" id="px9use_82">src/test/java/.../bdd/BookStepDefinitions.java</code>).</p></li><li class="list__item" id="px9use_76"><p id="px9use_83">Copiez-collez les snippets g&eacute;n&eacute;r&eacute;s par Cucumber dans cette classe.</p></li><li class="list__item" id="px9use_77"><p id="px9use_84"><span class="control" id="px9use_86">Liez la classe au contexte Spring.</span> C'est l'&eacute;tape la plus importante ! Nous devons dire &agrave; Cucumber : &quot;Quand tu ex&eacute;cutes ces tests, d&eacute;marre une application Spring Boot en arri&egrave;re-plan pour que je puisse interagir avec.&quot;</p><ul class="list _bullet" id="px9use_85"><li class="list__item" id="px9use_87"><p id="px9use_89">Ajoutez l'annotation <code class="code" id="px9use_90">@SpringBootTest</code> en haut de la classe.</p></li><li class="list__item" id="px9use_88"><p id="px9use_91">Ajoutez <code class="code" id="px9use_92">@AutoConfigureMockMvc</code> pour pouvoir simuler des appels HTTP.</p></li></ul></li><li class="list__item" id="px9use_78"><p id="px9use_93">Injectez (<code class="code" id="px9use_94">@Autowired</code>) les d&eacute;pendances dont nous aurons besoin : <code class="code" id="px9use_95">MockMvc</code> pour faire les appels, et <code class="code" id="px9use_96">BookRepository</code> pour le <code class="code" id="px9use_97">Given</code>.</p></li><li class="list__item" id="px9use_79"><p id="px9use_98">Stockez les donn&eacute;es partag&eacute;es entre les &eacute;tapes (<code class="code" id="px9use_99">Given</code>, <code class="code" id="px9use_100">When</code>, <code class="code" id="px9use_101">Then</code>) dans des variables d'instance de la classe.</p></li></ol><ol class="list _decimal"></ol></section><p id="px9use_68">Voici &agrave; quoi ressemble la classe <code class="code" id="px9use_102">BookStepDefinitions.java</code> apr&egrave;s ces modifications :</p><div class="code-block" data-lang="java">
+package fr.formation.spring.librarymanagement.bdd;
+
+import fr.formation.spring.librarymanagement.domain.Book;
+import fr.formation.spring.librarymanagement.repository.BookRepository;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+import io.cucumber.spring.CucumberContextConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+// Ces annotations sont la clé de l'intégration Spring/Cucumber
+@SpringBootTest
+@AutoConfigureMockMvc
+@CucumberContextConfiguration
+public class BookStepDefinitions {
+
+    // MockMvc permet de simuler des requêtes HTTP sur nos contrôleurs
+    @Autowired
+    private MockMvc mockMvc;
+
+    // Le repository pour préparer l'état de la base de données
+    @Autowired
+    private BookRepository bookRepository;
+
+    // Variable pour stocker le résultat de l'action (When)
+    // et le rendre disponible pour la vérification (Then)
+    private ResultActions resultActions;
+
+    @Given(&quot;un livre existe avec l'ISBN {string}&quot;)
+    public void un_livre_existe_avec_l_isbn(String isbn) {
+        // Pour ce test, nous nous assurons que les données
+        // initialisées par DataInitializer sont bien présentes.
+        // Dans un test plus complexe, nous pourrions créer le livre ici.
+        assert bookRepository.findById(isbn).isPresent();
+    }
+
+    @When(&quot;l'utilisateur recherche le livre par cet ISBN&quot;)
+    public void l_utilisateur_recherche_le_livre_par_cet_isbn() throws Exception {
+        // Le endpoint n'existe pas encore, donc cet appel va échouer.
+        // C'est l'étape &quot;ROUGE&quot; du cycle TDD/BDD.
+        resultActions = mockMvc.perform(get(&quot;/api/books/978-0441013593&quot;));
+    }
+
+    @Then(&quot;les détails du livre {string} sont retournés&quot;)
+    public void les_details_du_livre_sont_retournes(String title) throws Exception {
+        // Pour l'instant, nous nous contentons de vérifier
+        // que la requête a réussi (statut 200 OK).
+        // Cette assertion va échouer car l'appel précédent a échoué.
+        resultActions.andExpect(status().isOk());
+    }
+}
+</div><p id="px9use_70"><span class="control" id="px9use_103">Ex&eacute;cutez <code class="code" id="px9use_105">CucumberTestRunner</code> maintenant.</span> Le r&eacute;sultat change ! Fini le &quot;undefined&quot;. Vous devriez voir une erreur claire, probablement un <code class="code" id="px9use_104">404 Not Found</code>.</p><div class="code-block" data-lang="none">
+java.lang.AssertionError: Status expected:&lt;200&gt; but was:&lt;404&gt;
+</div><p id="px9use_72"><span class="control" id="px9use_106">Bravo ! Vous &ecirc;tes dans le ROUGE.</span> Cela signifie que votre test est bien &eacute;crit, il ex&eacute;cute un appel API, mais l'application ne sait pas encore comment y r&eacute;pondre.</p></section><section class="chapter"><h2 id="3-tape-2-crire-le-code-de-production-passer-de-rouge-vert" data-toc="3-tape-2-crire-le-code-de-production-passer-de-rouge-vert">3. &Eacute;tape 2 : &Eacute;crire le code de production (passer de &quot;rouge&quot; &agrave; &quot;vert&quot;)</h2><p id="px9use_107">Notre test nous dit exactement ce qui manque : un endpoint <code class="code" id="px9use_110">GET /api/books/{isbn}</code>. Notre mission est maintenant de l'impl&eacute;menter. Nous allons cr&eacute;er un <code class="code" id="px9use_111">RestController</code> pour exposer cette fonctionnalit&eacute;.</p><section class="procedure-steps"><h3 id="px9use_108" data-toc="px9use_108">Créer le contrôleur REST</h3><p id="px9use_112">Cr&eacute;ez un nouveau package <code class="code" id="px9use_114">fr.formation.spring.librarymanagement.controller</code> et ajoutez-y la classe <code class="code" id="px9use_115">BookController</code>.</p><div class="code-block" data-lang="java">
+package fr.formation.spring.librarymanagement.controller;
+
+import fr.formation.spring.librarymanagement.domain.Book;
+import fr.formation.spring.librarymanagement.repository.BookRepository;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+// Contrôleur REST pour la gestion des livres
+@RestController
+@RequestMapping(&quot;/api/books&quot;)
+public class BookController {
+
+    private final BookRepository bookRepository;
+
+    public BookController(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
+
+    // Endpoint pour récupérer un livre par son ISBN
+    @GetMapping(&quot;/{isbn}&quot;)
+    public ResponseEntity&lt;Book&gt; getBookByIsbn(@PathVariable String isbn) {
+        // On cherche le livre dans le repository.
+        // Si on le trouve, on retourne 200 OK avec le livre.
+        // Sinon, on retourne 404 Not Found.
+        return bookRepository.findById(isbn)
+                .map(ResponseEntity::ok) // Équivalent à book -&gt; ResponseEntity.ok(book)
+                .orElse(ResponseEntity.notFound().build());
+    }
+}
+</div><ol class="list _decimal"></ol></section><p id="px9use_109">Ce contr&ocirc;leur est tr&egrave;s simple : il re&ccedil;oit une requ&ecirc;te sur <code class="code" id="px9use_116">/{isbn}</code>, utilise le <code class="code" id="px9use_117">BookRepository</code> pour trouver le livre correspondant en base de donn&eacute;es, et retourne soit le livre avec un statut <code class="code" id="px9use_118">200 OK</code>, soit une r&eacute;ponse <code class="code" id="px9use_119">404 Not Found</code>.</p></section><section class="chapter"><h2 id="4-tape-3-valider-le-succ-s-et-affiner-le-test" data-toc="4-tape-3-valider-le-succ-s-et-affiner-le-test">4. &Eacute;tape 3 : Valider le succ&egrave;s et affiner le test</h2><p id="px9use_120"><span class="control" id="px9use_129">Relancez <code class="code" id="px9use_130">CucumberTestRunner</code>!</span></p><p id="px9use_121">Magie ! Le test devrait maintenant passer. La console affiche une sortie verte et rassurante :</p><div class="code-block" data-lang="none">
+1 scenario (1 passed)
+3 steps (3 passed)
+...
+</div><p id="px9use_123"><span class="control" id="px9use_131">F&eacute;licitations, vous &ecirc;tes dans le VERT !</span> Vous avez compl&eacute;t&eacute; votre premier cycle BDD.</p><p id="px9use_124">Maintenant, nous pouvons <span class="control" id="px9use_132">affiner</span> notre test. Juste v&eacute;rifier le statut 200, c'est bien, mais notre sc&eacute;nario est plus pr&eacute;cis : il veut v&eacute;rifier que les <span class="emphasis" id="px9use_133">d&eacute;tails du livre &quot;Dune&quot;</span> sont retourn&eacute;s.</p><p id="px9use_125">Am&eacute;liorons notre &eacute;tape <code class="code" id="px9use_134">Then</code> en utilisant <code class="code" id="px9use_135">jsonPath</code> (une fonctionnalit&eacute; de <code class="code" id="px9use_136">MockMvc</code>) et <code class="code" id="px9use_137">AssertJ</code> pour des assertions plus lisibles.</p><section class="procedure-steps"><h3 id="px9use_126" data-toc="px9use_126">Améliorer l'étape `Then`</h3><p id="px9use_138">Modifiez la m&eacute;thode <code class="code" id="px9use_140">les_details_du_livre_sont_retournes</code> dans <code class="code" id="px9use_141">BookStepDefinitions.java</code>.</p><div class="code-block" data-lang="java">
+// ... importations ...
+
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+// ... dans la classe BookStepDefinitions ...
+
+@Then(&quot;les détails du livre {string} sont retournés&quot;)
+public void les_details_du_livre_sont_retournes(String title) throws Exception {
+    resultActions
+            .andExpect(status().isOk()) // Vérifie le statut HTTP 200
+            .andExpect(jsonPath(&quot;$.title&quot;).value(title)) // Vérifie le titre dans le JSON
+            .andExpect(jsonPath(&quot;$.author&quot;).value(&quot;Frank Herbert&quot;)); // Vérifie l'auteur
+}
+</div><ol class="list _decimal"></ol></section><p id="px9use_127">Relancez le test une derni&egrave;re fois pour confirmer que tout fonctionne toujours. C'est l'&eacute;tape de <span class="control" id="px9use_142">Refactor</span>: on am&eacute;liore la qualit&eacute; du code (de test ou de production) sans en changer le comportement.</p></section><section class="chapter"><h2 id="exercice-4-sc-nario-du-livre-non-trouv" data-toc="exercice-4-sc-nario-du-livre-non-trouv">Exercice 4 : Sc&eacute;nario du livre non trouv&eacute;</h2><p id="px9use_143">Maintenant, c'est &agrave; vous d'appliquer ce cycle pour un nouveau sc&eacute;nario.</p><p id="px9use_144"><span class="control" id="px9use_149">Votre mission :</span></p><ol class="list _decimal" id="px9use_145" type="1"><li class="list__item" id="px9use_150"><p id="px9use_154"><span class="control" id="px9use_155">Ajoutez</span> un nouveau sc&eacute;nario &agrave; votre fichier <code class="code" id="px9use_156">book_search.feature</code> pour le cas o&ugrave; un livre n'est pas trouv&eacute;.</p></li><li class="list__item" id="px9use_151"><p id="px9use_157"><span class="control" id="px9use_158">Ex&eacute;cutez</span> les tests. Vous verrez que Cucumber vous signale qu'un sc&eacute;nario a des &eacute;tapes &quot;undefined&quot;. Copiez les nouveaux snippets.</p></li><li class="list__item" id="px9use_152"><p id="px9use_159"><span class="control" id="px9use_160">Impl&eacute;mentez</span> les nouvelles &eacute;tapes dans <code class="code" id="px9use_161">BookStepDefinitions.java</code>.</p></li><li class="list__item" id="px9use_153"><p id="px9use_162"><span class="control" id="px9use_163">Suivez le cycle Rouge-Vert</span>: votre test doit d'abord &eacute;chouer (car votre code retourne d&eacute;j&agrave; 404, mais votre test ne s'y attend pas encore), puis passer.</p></li></ol><p id="px9use_146"><span class="control" id="px9use_164">Nouveau sc&eacute;nario &agrave; ajouter dans <code class="code" id="px9use_165">book_search.feature</code>:</span></p><div class="code-block" data-lang="gherkin">
+  Scenario: Recherche d'un livre qui n'existe pas
+    When l'utilisateur recherche le livre avec l'ISBN &quot;000-0000000000&quot;
+    Then aucune information de livre n'est retournée
+    And le statut de la réponse est &quot;Not Found&quot;
+</div><p id="px9use_148"><span class="control" id="px9use_166">Conseil :</span> Vous aurez besoin d'une nouvelle m&eacute;thode <code class="code" id="px9use_167">When</code> (car l'ISBN est diff&eacute;rent) et de deux nouvelles m&eacute;thodes <code class="code" id="px9use_168">Then</code>. Pour la derni&egrave;re &eacute;tape, utilisez <code class="code" id="px9use_169">resultActions.andExpect(status().isNotFound());</code>.</p></section><section class="chapter"><div class="collapse"><div class="collapse__title"><h2 id="correction-exercice-4" data-toc="correction-exercice-4">Correction exercice 4</h2></div><div class="collapse__content"><p id="px9use_170">Voici les &eacute;tapes de la solution.</p><p id="px9use_171"><span class="control" id="px9use_181">1. <code class="code" id="px9use_182">book_search.feature</code> mis &agrave; jour</span></p><div class="code-block" data-lang="gherkin">
+Feature: Recherche de livre par ISBN
+  # ...
+
+  Scenario: Recherche d'un livre existant avec succès
+    # ...
+
+  Scenario: Recherche d'un livre qui n'existe pas
+    When l'utilisateur recherche le livre avec l'ISBN &quot;000-0000000000&quot;
+    Then aucune information de livre n'est retournée
+    And le statut de la réponse est &quot;Not Found&quot;
+</div><p id="px9use_173"><span class="control" id="px9use_183">2. Ajouts dans <code class="code" id="px9use_184">BookStepDefinitions.java</code></span></p><p id="px9use_174">En lan&ccedil;ant les tests, Cucumber g&eacute;n&egrave;re les snippets. On les ajoute et on les impl&eacute;mente.</p><div class="code-block" data-lang="java">
+// ... dans la classe BookStepDefinitions ...
+
+// Nouvelle étape WHEN pour un ISBN spécifique
+@When(&quot;l'utilisateur recherche le livre avec l'ISBN {string}&quot;)
+public void l_utilisateur_recherche_le_livre_avec_l_isbn(String isbn) throws Exception {
+    // Cette étape est paramétrée, elle remplace l'ancienne étape 'When'
+    // qui avait l'ISBN en dur. C'est beaucoup mieux !
+    resultActions = mockMvc.perform(get(&quot;/api/books/&quot; + isbn));
+}
+
+// Nouvelle étape THEN
+@Then(&quot;aucune information de livre n'est retournée&quot;)
+public void aucune_information_de_livre_n_est_retournee() throws Exception {
+    // On vérifie que le corps de la réponse est vide.
+    // Pour un 404, c'est généralement le cas.
+    resultActions.andExpect(jsonPath(&quot;$&quot;).doesNotExist());
+}
+
+// Nouvelle étape AND (qui est un THEN)
+@Then(&quot;le statut de la réponse est {string}&quot;)
+public void le_statut_de_la_reponse_est(String status) throws Exception {
+    if (&quot;Not Found&quot;.equalsIgnoreCase(status)) {
+        resultActions.andExpect(status().isNotFound()); // Vérifie 404
+    }
+}
+</div><p id="px9use_176"><span class="control" id="px9use_185">Am&eacute;lioration (Refactoring) :</span> Vous remarquerez que nous avons maintenant deux &eacute;tapes <code class="code" id="px9use_186">When</code> tr&egrave;s similaires. On peut les fusionner en une seule &eacute;tape param&eacute;tr&eacute;e.</p><ul class="list _bullet" id="px9use_177"><li class="list__item" id="px9use_187"><p id="px9use_189">Supprimez l'ancienne m&eacute;thode : <code class="code" id="px9use_190">l_utilisateur_recherche_le_livre_par_cet_isbn()</code>.</p></li><li class="list__item" id="px9use_188"><p id="px9use_191">Modifiez le premier sc&eacute;nario pour qu'il utilise la nouvelle &eacute;tape :</p></li></ul><div class="code-block" data-lang="gherkin">
+  Scenario: Recherche d'un livre existant avec succès
+    Given un livre existe avec l'ISBN &quot;978-0441013593&quot;
+    When l'utilisateur recherche le livre avec l'ISBN &quot;978-0441013593&quot;
+    Then les détails du livre &quot;Dune&quot; sont retournés
+</div><p id="px9use_179">Maintenant, une seule m&eacute;thode Java g&egrave;re les deux <code class="code" id="px9use_192">When</code>, ce qui est plus maintenable. En relan&ccedil;ant les tests, les deux sc&eacute;narios devraient passer.</p></div></div></section><section class="chapter"><h2 id="auto-valuation" data-toc="auto-valuation">Auto-&eacute;valuation</h2><ol class="list _decimal" id="px9use_193" type="1"><li class="list__item" id="px9use_195"><p id="px9use_200"><span class="control" id="px9use_201">Quelle annotation est essentielle pour injecter <code class="code" id="px9use_206">MockMvc</code> dans une classe de test Cucumber ?</span> a) <code class="code" id="px9use_202">@SpringBootTest</code> b) <code class="code" id="px9use_203">@EnableMockMvc</code> c) <code class="code" id="px9use_204">@AutoConfigureMockMvc</code> d) <code class="code" id="px9use_205">@Cucumber</code></p></li><li class="list__item" id="px9use_196"><p id="px9use_207"><span class="control" id="px9use_208">Dans le cycle BDD, quel est l'&eacute;tat attendu juste apr&egrave;s avoir impl&eacute;ment&eacute; les Step Definitions (avec le code de test) mais avant d'avoir &eacute;crit le code de production ?</span> a) Vert (Passed) b) Rouge (Failed) c) Jaune (Undefined) d) Bleu (Skipped)</p></li><li class="list__item" id="px9use_197"><p id="px9use_209"><span class="control" id="px9use_210">&Agrave; quoi sert <code class="code" id="px9use_211">MockMvc</code>?</span> a) &Agrave; se connecter &agrave; une fausse base de donn&eacute;es. b) &Agrave; cr&eacute;er des objets &quot;mock&quot; pour les services. c) &Agrave; simuler des requ&ecirc;tes HTTP vers les contr&ocirc;leurs REST sans d&eacute;marrer un vrai serveur web. d) &Agrave; g&eacute;n&eacute;rer des donn&eacute;es de test.</p></li><li class="list__item" id="px9use_198"><p id="px9use_212"><span class="control" id="px9use_213">Expliquez pourquoi le fait de passer de &quot;undefined&quot; &agrave; &quot;rouge&quot; (failed) est une &eacute;tape cruciale et positive.</span></p></li><li class="list__item" id="px9use_199"><p id="px9use_214"><span class="control" id="px9use_215">Quelle est la diff&eacute;rence entre <code class="code" id="px9use_216">status().isOk()</code> et <code class="code" id="px9use_217">jsonPath(&quot;$.title&quot;).value(&quot;Dune&quot;)</code> dans une assertion de test ? Pourquoi avons-nous besoin des deux ?</span></p></li></ol></section><section class="chapter"><h2 id="conclusion-vous-avez-donn-vie-une-sp-cification" data-toc="conclusion-vous-avez-donn-vie-une-sp-cification">Conclusion : Vous avez donn&eacute; vie &agrave; une sp&eacute;cification !</h2><p id="px9use_218">F&eacute;licitations, c'est une &eacute;tape majeure ! Vous avez parcouru tout le chemin : d'une phrase en langage naturel dans un fichier <code class="code" id="px9use_222">.feature</code> &agrave; un test automatis&eacute; complet qui valide le comportement r&eacute;el de votre code de production.</p><p id="px9use_219">Vous avez appris &agrave; :</p><ul class="list _bullet" id="px9use_220"><li class="list__item" id="px9use_223"><p id="px9use_227"><span class="control" id="px9use_228">Traduire</span> des &eacute;tapes Gherkin en m&eacute;thodes Java.</p></li><li class="list__item" id="px9use_224"><p id="px9use_229"><span class="control" id="px9use_230">Piloter</span> votre application avec <code class="code" id="px9use_231">MockMvc</code>.</p></li><li class="list__item" id="px9use_225"><p id="px9use_232"><span class="control" id="px9use_233">V&eacute;rifier</span> les r&eacute;sultats avec pr&eacute;cision.</p></li><li class="list__item" id="px9use_226"><p id="px9use_234"><span class="control" id="px9use_235">Suivre</span> le cycle Rouge-Vert-Refactor, qui est le c&oelig;ur du d&eacute;veloppement agile guid&eacute; par les tests.</p></li></ul><p id="px9use_221">Vous d&eacute;tenez maintenant la comp&eacute;tence de base la plus importante en BDD. Dans les prochains modules, nous allons nous appuyer sur cet acquis pour explorer des techniques plus avanc&eacute;es : comment g&eacute;rer des donn&eacute;es plus complexes, comment partager des informations entre les &eacute;tapes de test, et comment tester les diff&eacute;rentes couches de notre application. Vous &ecirc;tes pr&ecirc;t pour la suite</p></section><div class="last-modified">18 juillet 2025</div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom"><a href="002-00-dev-env-setup.html" class="navigation-links__prev">Chapitre 2 : Mise en Place de l'Environnement de D&eacute;veloppement</a><a href="004-00-advanced-techniques.html" class="navigation-links__next">Chapitre 4 : Techniques Avanc&eacute;es et Gestion de l'&Eacute;tat</a></div></article><div id="disqus_thread"></div></div></section></main></div><script src="https://resources.jetbrains.com/writerside/apidoc/6.22.0-b776/app.js"></script></body></html>

@@ -149,7 +149,7 @@ S1 -[hidden]u-->S2
 @enduml
 ```
 
-![data-stream-Flux_de_Données_avec_un_TestContext.svg](data-stream-Flux_de_Données_avec_un_TestContext.svg)
+![data-stream-Flux_de_Données_avec_un_TestContext.svg](data-stream-Flux_de_Donnees_avec_un_TestContext.svg)
 
 
 <procedure title="Mettre en place le TestContext">
