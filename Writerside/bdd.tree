@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE instance-profile
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/product-profile.dtd">
+
+<instance-profile id="bdd"
+                 name="Behaviour driven dev"
+                 start-page="001-00-intro.md">
+
+    <toc-element topic="001-00-intro.md">
+        <toc-element topic="001-01-more-on-bdd.md"/>
+    </toc-element>
+    <toc-element topic="002-00-dev-env-setup.md"/>
+    <toc-element topic="Empty-MD-003-00-first-bdd-test.md"/>
+    <toc-element topic="004-00-advanced-techniques.md"/>
+    <toc-element topic="005-00-spring-application-layers.md"/>
+    <toc-element topic="006-00-final-project.md">
+        <toc-element topic="006-01-best-practices.md"/>
+    </toc-element>
+    <toc-element topic="007-00-conclusion.md"/>
+</instance-profile>
